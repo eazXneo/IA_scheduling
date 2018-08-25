@@ -49,7 +49,7 @@ def set_up_classes():
     subjects.append([user, 2, 0])
     print(subjects)
 
-# function to set up faverourites
+# function to set up favourites
 def set_up_preferences():
     sl_one = subjects[1][0]
     sl_two = subjects[2][0]
@@ -67,12 +67,31 @@ def set_up_preferences():
     print("5", hl_two)
     print("6", hl_three)
     # Rank subjects:
-
+    print("You will now set your top two subjects:")
+    print("Please enter your first favourite subject number:")
+    s1 = True
+    while s1:
+        user = input(user_template)
+        if user == "1" or user == "2" or user == "3" or user == "4" or user == "5" or user == "6":
+            number = int(user)
+            s = subjects[number][0]
+            l = subjects[number][1]
+            edit = subjects.pop(number)
+            print(edit)
+            subjects.append([s, l, 2])
+            break
+        elif user != "1" or user != "2" or user != "3" or user != "4" or user != "5" or user != "6":
+            print("Could you please repeat that?")
+    # only another 5 subjects.
     # adding to file.
     with open("PROFILE.json", 'w') as outfile:
         json.dump(subjects, outfile)
+    # profile set up!!!
+    # now look at editing an existing profile!!!
 
 ### End of funtions?
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 while start:
     print("Hello, welcome to your main menu. Please select an option.")
@@ -107,6 +126,14 @@ while start:
                 else:
                     print("Could you please repeat that?\n")
             elif first:
+                ###
+
+
+                ### new plan = do not edit profile. If editing needs to be done, output how to manually change profile
+                ### in PROFILE.json file!!!
+
+
+                ###
                 print("Welcome back to your profile. Select and option below.")
                 print("1. Create a entirely new profile")
                 print("2. Change a particular aspect of your profile")
@@ -130,12 +157,9 @@ while start:
                     print("Could you please repeat that?")
     elif user == "2":
         print("TASKS")
+        '''    with open("PROFILE.json") as json_file:
+                data = list(json.load(json_file))'''
     elif user == "3":
         print("WEEK!")
     else:
         print("Could you please repeat that?")
-
-profile_txt.close()
-
-'''    with open("PROFILE.json") as json_file:
-        data = list(json.load(json_file))'''
