@@ -1,0 +1,141 @@
+import json
+
+user_template = "USER: "
+user_name = "" # do I need this?
+
+# subject name > six subjects total + TOK
+# level > 0 = nothing, 1 = SL, 2 = HL
+# preference > rank >> 6 = fave
+# explain that TOK will be dealt as least important.
+subjects = [["TOK", 0, 0]]
+
+start = True
+
+profile_txt = open("PROFILE.json", "r+")
+first = profile_txt.read(1)
+
+### testing area
+
+### end of testing area
+
+##### I think it would be a very good idea to make some functions to make this code more organised.
+
+# function to set up classes
+def set_up_classes():
+    print("Here you will be able to set up your classes. You automatically have TOK as a subject.")
+    # SL 1
+    print("Please enter SL subject 1")
+    user = input(user_template)
+    subjects.append([user, 1, 0])
+    # SL 2
+    print("Please enter SL subject 2")
+    user = input(user_template)
+    subjects.append([user, 1, 0])
+    # SL 3
+    print("Please enter SL subject 3")
+    user = input(user_template)
+    subjects.append([user, 1, 0])
+    # HL 1
+    print("Please enter HL subject 1")
+    user = input(user_template)
+    subjects.append([user, 2, 0])
+    # HL 2
+    print("Please enter HL subject 2")
+    user = input(user_template)
+    subjects.append([user, 2, 0])
+    # HL 3
+    print("Please enter HL subject 3")
+    user = input(user_template)
+    subjects.append([user, 2, 0])
+    print(subjects)
+
+# function to set up faverourites
+def set_up_preferences():
+    sl_one = subjects[1][0]
+    sl_two = subjects[2][0]
+    sl_three = subjects[3][0]
+    hl_one = subjects[4][0]
+    hl_two = subjects[5][0]
+    hl_three = subjects[6][0]
+    print("Here you will be able to set up your preferences. TOK will automatically be the least important subject. "
+          "Hope you don't mind.")
+    print("Below are the subjects you take:")
+    print("1", sl_one)
+    print("2", sl_two)
+    print("3", sl_three)
+    print("4", hl_one)
+    print("5", hl_two)
+    print("6", hl_three)
+    # Rank subjects:
+
+    # adding to file.
+    with open("PROFILE.json", 'w') as outfile:
+        json.dump(subjects, outfile)
+
+### End of funtions?
+
+while start:
+    print("Hello, welcome to your main menu. Please select an option.")
+    print("To exit, type \"quit\" anytime.")
+    print("1. Establish / edit profile so that best possible schedule can be calculated.")
+    print("2. Add a task")
+    print("3. View week")
+    user = input(user_template)
+    if user == "quit":
+        start = False
+    elif user == "1":
+        print("PROFILE")
+        profile = True
+        while profile:
+            ### first time it should only ask to setup, ie. when txt file is blank
+            if not first:
+                print("Looks like you haven't used this program before. Let's set up a profile for you. ")
+                print("Enter \"ok\" to continue.")
+                user = input(user_template)
+                if user == "quit":
+                    break
+                elif user == "ok":
+                    print("CONTINUE!!!")
+                    set_up_classes()
+                    print("now set up fav subjects!")
+                    # now rank based on favourite to least favourite. store in file
+                    set_up_preferences()
+                    # now add option to edit / apply changes !!!
+                    # profile is 90% finished!!!
+                    # not really - what about the
+                    break
+                else:
+                    print("Could you please repeat that?\n")
+            elif first:
+                print("Welcome back to your profile. Select and option below.")
+                print("1. Create a entirely new profile")
+                print("2. Change a particular aspect of your profile")
+                user = input(user_template)
+                ### so, this will ask to setup or edit
+                #### remember to READ file and CHANGE rather than write new stuff. Unless that's how one does it.
+                #### Remember to research!!!
+                if user == "quit":
+                    break
+                if user == "1":
+                    print("establish entirely new profile.")
+                    ### clear profile file!!!
+                    # copy from above
+                    break
+                elif user == "2":
+                    print("edit profile")
+                    ### probably very similar structre to that of the chatbot but slightly harder because of saving
+                    ### variables to txt file.
+                    break
+                else:
+                    print("Could you please repeat that?")
+    elif user == "2":
+        print("TASKS")
+    elif user == "3":
+        print("WEEK!")
+    else:
+        print("Could you please repeat that?")
+
+profile_txt.close()
+
+'''    with open("PROFILE.json") as json_file:
+        data = list(json.load(json_file))'''
