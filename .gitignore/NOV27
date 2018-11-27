@@ -1,0 +1,434 @@
+import pickle
+
+file_empty = True
+
+profile_txt = open("/Users/19andrusz_l/Desktop/JCode/profile", "r+")
+try: 
+    profile_exists = profile_txt.read(1)
+except UnicodeDecodeError:
+    print("File NOT empty.")
+    file_empty = False
+
+print(file_empty)
+if file_empty == True:
+    profile_exists = False
+elif file_empty == False:
+    profile_exists = True
+
+start = True
+user_template = "USER: "
+
+subjects = [["TOK", 0, 0]]
+numbers_left = [1,2,3,4,5,6]
+
+# === functions
+
+def set_up_classes():
+    print("Here you will be able to set up your classes. You automatically have TOK as a subject.")
+    # SL 1
+    print("Please enter SL subject 1")
+    user = input(user_template)
+    subjects.append([user, 1, 0])
+    # SL 2
+    print("Please enter SL subject 2")
+    user = input(user_template)
+    subjects.append([user, 1, 0])
+    # SL 3
+    print("Please enter SL subject 3")
+    user = input(user_template)
+    subjects.append([user, 1, 0])
+    # HL 1
+    print("Please enter HL subject 1")
+    user = input(user_template)
+    subjects.append([user, 2, 0])
+    # HL 2
+    print("Please enter HL subject 2")
+    user = input(user_template)
+    subjects.append([user, 2, 0])
+    # HL 3
+    print("Please enter HL subject 3")
+    user = input(user_template)
+    subjects.append([user, 2, 0])
+    print(subjects)
+
+def set_up_preferences():
+    sl_one = subjects[1][0]
+    sl_two = subjects[2][0]
+    sl_three = subjects[3][0]
+    hl_one = subjects[4][0]
+    hl_two = subjects[5][0]
+    hl_three = subjects[6][0]
+    print("Here you will be able to set up your preferences. TOK will automatically be the least important subject. "
+          "Hope you don't mind.")
+    print("Below are the subjects you take:")
+    print("1", sl_one)
+    print("2", sl_two)
+    print("3", sl_three)
+    print("4", hl_one)
+    print("5", hl_two)
+    print("6", hl_three)
+    # Rank subjects:
+    print("You will now rank your subjects in order from favourite to least:")
+    print("Fave subject 1: ")
+    preference = 2
+    i = 0
+    while i < 6: 
+        print(numbers_left)
+        user_first = input(user_template)
+        try:
+            user = int(user_first)
+        except ValueError:
+                print("Could you please repeat that?")
+                continue
+        check = user in numbers_left
+        print(check)
+        if user not in numbers_left:
+            print("Could you please repeat that?")
+            user = input(user_template)
+        if user in numbers_left and (i == 0 or i == 1):
+            number = int(user)
+            s = subjects[number][0]
+            l = subjects[number][1]
+            preference = 2
+            edit = subjects.pop(number)
+            print(edit)
+            subjects.insert(number, [s, l, preference])
+            numbers_left.remove(user)
+            i = i + 1
+            print(i)
+        elif user in numbers_left and (i == 2 or i == 3):
+            s = subjects[number][0]
+            l = subjects[number][1]
+            preference = 1
+            edit = subjects.pop(number)
+            print(edit)
+            subjects.insert(number, [s, l, preference])
+            numbers_left.remove(user)
+            i = i + 1
+            print(i)
+        elif user in numbers_left and (i == 4 or i == 5):
+            s = subjects[number][0]
+            l = subjects[number][1]
+            preference = 0
+            edit = subjects.pop(number)
+            print(edit)
+            subjects.insert(number, [s, l, preference])
+            numbers_left.remove(user)
+            i = i + 1
+            print(i)
+    # adding to file.
+    pickle_out = open("/Users/19andrusz_l/Desktop/JCode/profile","wb")
+    pickle.dump(subjects, pickle_out)
+    # profile set up!!!
+    print(subjects)
+    profile_exists = True
+    # now look at editing an existing profile!!!
+    return subjects
+    return profile_exists
+
+# --- tasks
+
+tasks_empty = [1,2,3,4,5]
+
+# subject number, description, days until due, length, total score
+task1 = [0, "", 0, 0, 0]
+task2 = [0, "", 0, 0, 0]
+task3 = [0, "", 0, 0, 0]
+task4 = [0, "", 0, 0, 0]
+task5 = [0, "", 0, 0, 0]
+tasks_list = [task1, task2, task3, task4, task5]
+task_count = 0
+
+def set_up_new_task():
+    global task_count
+    take_number = task_count
+    to_edit = tasks_list[take_number]
+
+    while len(tasks_empty) != 0:
+        print("Tasks being set up")
+        if len(tasks_list) == 0:
+            print("sorry, there is no more space for additional tasks.")
+            break
+        # subject
+        print("Please enter the subject number.")
+        user = input(user_template)
+        if user == "quit":
+            break
+        try:
+            sub_number = int(user)
+            to_edit[0] = sub_number
+        except ValueError:
+                print("Could you please repeat that?")
+                continue
+        print(to_edit)
+        # description
+        print("Add a description to this task.")
+        user = input(user_template)
+        to_edit[1] = user
+        print(to_edit)
+        # days until due
+        days_until_due = True
+        while days_until_due:
+            print("Please enter days until due.")
+            user = input(user_template)
+            try:
+                days_number = int(user)
+                to_edit[2] = days_number
+                break
+            except ValueError:
+                    print("Could you please repeat that?")
+                    continue
+        print(to_edit)
+        # duration
+        duration_edit = True
+        while duration_edit:
+            print("Please enter approximate duration (in hours).")
+            user = input(user_template)
+            try:
+                duration_time = int(user)
+                to_edit[3] = duration_time
+                break
+            except ValueError:
+                    print("Could you please repeat that?")
+                    continue
+        print(to_edit)
+        # get final score
+        s_level = subjects[sub_number][1]
+        s_pref = subjects[sub_number][2]
+        d_until_due = 0
+        if days_number <= 1:
+            d_until_due = 2
+        elif days_number <= 3 and days_number > 1:
+            d_until_due = 1
+        elif days_number > 3:
+            d_until_due = 0.5
+        task_length = 0
+        if duration_time >= 3:
+            task_length = 2
+        elif duration_time >= 1 and duration_time < 3:
+            task_length = 1
+        elif duration_time < 1:
+            task_length = 0
+
+        score = 3*d_until_due + 3*task_length + s_pref + 2*s_level
+        to_edit[4] = score
+        print(to_edit)
+        print(score)
+        # pickle this
+        pickle_out = open("/Users/19andrusz_l/Desktop/JCode/tasks","wb")
+        pickle.dump(to_edit, pickle_out)
+        tasks_empty.pop(0)
+
+        task_count = task_count + 1
+        print(task1)
+        print(task2)
+        print(task3)
+        print(task4)
+        print(task5)
+        print(task_count)
+        # change task1 to something terable until 5.
+        return task_count
+        return to_edit
+        return tasks_list
+        break
+
+def takeSecond(elem):
+    return elem[1]
+
+###### I think some more functions could come in handy.
+    
+
+week_order_of_tasks = []
+
+# === actual start
+
+while start:
+    print("Hello, welcome to your main menu. Please select an option.")
+    print("To exit, type \"quit\" anytime in main menu.")
+    print("To go back, type \"back\" anytime.")
+    print("1. Establish / edit profile so that best possible schedule can be calculated.")
+    print("2. Add a task")
+    print("3. View week")
+    user = input(user_template)
+    if user == "quit":
+        start = False
+        break
+    elif user == "1":
+        profile = True
+        while profile:
+            # first time it should only ask to setup, ie. when txt file is blank
+            if not profile_exists:
+                print("Looks like you haven't used this program before. Let's set up a profile for you. ")
+                print("Enter \"ok\" to continue.")
+                user = input(user_template)
+                if user == "quit":
+                    break
+                elif user == "ok":
+                    set_up_classes()
+                    set_up_preferences()
+                    profile_exists = True
+                    break
+                else:
+                    print("Could you please repeat that?\n")
+            elif profile_exists:
+                ##### later
+                print("later")
+                profile_pickle = open("/Users/19andrusz_l/Desktop/JCode/profile","rb")
+                subjects = pickle.load(profile_pickle)
+                print(subjects)
+                break
+                '''
+                ### new plan = do not edit profile. If editing needs to be done, output how to manually change profile
+                ### in PROFILE.json file!!!
+                print("Welcome back to your profile. Select and option below.")
+                print("1. Create a entirely new profile")
+                print("2. Change a particular aspect of your profile")
+                user = input(user_template)
+                ### so, this will ask to setup or edit
+                #### remember to READ file and CHANGE rather than write new stuff. Unless that's how one does it.
+                #### Remember to research!!!
+                if user == "back":
+                    break
+                if user == "1":
+                    print("establish entirely new profile.")
+                    ### clear profile file!!!
+                    # copy from above
+                    break
+                elif user == "2":
+                    print("edit profile")
+                    ### probably very similar structre to that of the chatbot but slightly harder because of saving
+                    ### variables to txt file.
+                    break
+                else:
+                    print("Could you please repeat that?")
+                '''
+    elif user == "2":
+        print("TASKS")
+        print("Welcome back to your tasks. Select and option below.")
+        print("1. Create a entirely new task")
+        print("2. view and edit tasks")
+        user = input(user_template)
+        if user == "back":
+            break
+        if user == "1":
+            print("establish new task.")
+            profile_pickle = open("/Users/19andrusz_l/Desktop/JCode/profile","rb")
+            subjects = pickle.load(profile_pickle)
+            print(subjects)
+            print("1", subjects[1][0])
+            print("2", subjects[2][0])
+            print("3", subjects[3][0])
+            print("4", subjects[4][0])
+            print("5", subjects[5][0])
+            print("6", subjects[6][0])
+            ### create task
+            set_up_new_task()
+            ### calculate its value.
+        ### view, edit, delete
+        ### create task
+        '''    with open("PROFILE.json") as json_file:
+                data = list(json.load(json_file))'''
+        if user == "2":
+            print("unpickling tasks")
+
+            task_c = open("/Users/19andrusz_l/Desktop/JCode/taskCount", "r+")
+            try: 
+                tc_exists = task_c.read(1)
+                task_count = 0
+            except UnicodeDecodeError:
+                print("TASK COUNT EXISTS")
+                tc_pickle = open("/Users/19andrusz_l/Desktop/JCode/taskCount","rb")
+                task_count = pickle.load(tc_pickle)
+                print(task_count)
+                for j in range(0, task_count):
+                    print("unpickle this.")
+                    task_to_unpickle = tasks_list[j]
+                    task_file = open("/Users/19andrusz_l/Desktop/JCode/tasks","rb")
+                    tasks_list[j] = pickle.load(task_file)
+                    print(tasks_list)
+
+            ### display tasks
+            task1 = tasks_list[0]
+            task2 = tasks_list[1]
+            task3 = tasks_list[2]
+            task4 = tasks_list[3]
+            task5 = tasks_list[4]
+            print("\nunpickling finished?", tasks_list)
+            print(task1)
+            # use task count in for loop to unpickle. then list
+    elif user == "3":
+        task_c = open("/Users/19andrusz_l/Desktop/JCode/taskCount", "r+")
+        try: 
+            tc_exists = task_c.read(1)
+            task_count = 0
+        except UnicodeDecodeError:
+            print("TASK COUNT EXISTS")
+            tc_pickle = open("/Users/19andrusz_l/Desktop/JCode/taskCount","rb")
+            task_count = pickle.load(tc_pickle)
+            print(task_count)
+            for j in range(0, task_count):
+                print("unpickle this.")
+                task_to_unpickle = tasks_list[j]
+                task_file = open("/Users/19andrusz_l/Desktop/JCode/tasks","rb")
+                tasks_list[j] = pickle.load(task_file)
+                print(tasks_list)
+
+
+        task1 = tasks_list[0]
+        task2 = tasks_list[1]
+        task3 = tasks_list[2]
+        task4 = tasks_list[3]
+        task5 = tasks_list[4]
+
+        # for example this could be a
+        # function and what you want to unpickle
+        # would be a parameter and I would
+        # live happilly ever after
+        # with code that was easier to understand.
+        try: 
+            w_exists = task_c.read(1)
+            print("NO week.")
+        except UnicodeDecodeError:
+            print("WEEK EXISTS")
+            wee_pickle = open("/Users/19andrusz_l/Desktop/JCode/week","rb")
+            week_order_of_tasks = pickle.load(wee_pickle)
+            print(week_order_of_tasks)
+
+        print("WEEK!")
+        score1 = task1[4]
+        score2 = task2[4]
+        score3 = task3[4]
+        score4 = task4[4]
+        score5 = task5[4]
+        print("type score1:", type(score1))
+        unsorted_tasks = []
+        unsorted_tasks.append([1, score1])
+        unsorted_tasks.append([2, score2])
+        unsorted_tasks.append([3, score3])
+        unsorted_tasks.append([4, score4])
+        unsorted_tasks.append([5, score5])
+        highscore = 0
+        unsorted_tasks.sort(key=takeSecond, reverse=True)
+        print(unsorted_tasks)
+        week_order_of_tasks = unsorted_tasks
+        '''
+        for k in range(0, 5):
+            highscore = int(max(unsorted_tasks))
+            i_high = unsorted_tasks.index(highscore)
+            week_order_of_tasks.append([i_high, highscore])
+            unsorted_tasks.remove(highscore)
+        ### arrange the tasks.
+        ### view tasks in order
+        '''
+        # pickle
+        pickle_out = open("/Users/19andrusz_l/Desktop/JCode/week","wb")
+        pickle.dump(week_order_of_tasks, pickle_out)
+        print(week_order_of_tasks)
+    else:
+        print("Could you please repeat that?")
+
+if task_count > 0:
+    pickle_out = open("/Users/19andrusz_l/Desktop/JCode/taskCount","wb")
+    pickle.dump(task_count, pickle_out)
+
+### I AM DONE FOR THE MOMENT ###
