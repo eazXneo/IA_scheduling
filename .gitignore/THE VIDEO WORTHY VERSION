@@ -1,0 +1,674 @@
+# The code for changing pages was derived from: http://stackoverflow.com/questions/7546050/switch-between-two-frames-in-tkinter
+# License: http://creativecommons.org/licenses/by-sa/3.0/
+# citation provided in IA documentation
+# only framework used. Code for program SOLELY devised by me (student)
+
+from tkinter import *
+import tkinter as tk
+
+# importing the tkinter GUI library
+from tkinter import OptionMenu
+
+LARGE_FONT = ("Verdana", 13)
+# setting font for the program
+
+subjectList = []
+subjectNames = []
+preference_list = [0]
+
+# data structures (lists) that will store the profile, task and week details.
+# subjects = ["if", "you're", "seeing", "this", "update", "profile"]
+# create a subject class to have a central place for instances to be created (unlike at the moment)
+class Subject:
+    global preference_list
+    print("user preference:", preference_list)
+
+    # when new subject object is added, set the name and add this name to subjectNames
+    def __init__(self, name):
+        self.name = name
+        print("in Subject, name:", name)
+        subjectList.append(self)
+        subjectNames.append(name)
+
+        print("user PREF:", preference_list)
+
+def addSubject():
+    global subjectNames
+
+    # if len(subjectNames) == 1:
+    Subject(str(newSubject.get()))
+    subjectNames = []
+    print("new Subject:", newSubject.get())
+    print("sn:", subjectNames)
+    subjectMenu.children["menu"].delete(0, "end")
+    for s in subjectList:
+        subjectNames.append(s.name)
+        subjectMenu.children["menu"].add_command(label=s.name,
+                                                              command=lambda sub=s.name: selectedSubject.set(sub))
+    selectedSubject.set(subjectNames[0])
+    print("subject names:", subjectNames)
+
+    preference_list.append(p1.get())
+    print("user pref:", preference_list)
+
+    # elif len(subjectNames) == 2:
+    Subject(str(newSubject2.get()))
+    subjectNames = []
+    print("new Subject:", newSubject2.get())
+    print("sn:", subjectNames)
+    subjectMenu.children["menu"].delete(0, "end")
+    for s in subjectList:
+        subjectNames.append(s.name)
+        subjectMenu.children["menu"].add_command(label=s.name,
+                                                              command=lambda sub=s.name: selectedSubject.set(sub))
+    selectedSubject.set(subjectNames[0])
+    print("subject names:", subjectNames)
+
+    preference_list.append(p2.get())
+    print("user pref:", preference_list)
+
+    # elif len(subjectNames) == 3:
+    Subject(str(newSubject3.get()))
+    subjectNames = []
+    print("new Subject:", newSubject3.get())
+    print("sn:", subjectNames)
+    subjectMenu.children["menu"].delete(0, "end")
+    for s in subjectList:
+        subjectNames.append(s.name)
+        subjectMenu.children["menu"].add_command(label=s.name,
+                                                              command=lambda sub=s.name: selectedSubject.set(sub))
+    selectedSubject.set(subjectNames[0])
+    print("subject names:", subjectNames)
+
+    preference_list.append(p3.get())
+    print("user pref:", preference_list)
+
+    # elif len(subjectNames) == 4:
+    Subject(str(newSubject4.get()))
+    subjectNames = []
+    print("new Subject:", newSubject4.get())
+    print("sn:", subjectNames)
+    subjectMenu.children["menu"].delete(0, "end")
+    for s in subjectList:
+        subjectNames.append(s.name)
+        subjectMenu.children["menu"].add_command(label=s.name,
+                                                              command=lambda sub=s.name: selectedSubject.set(sub))
+    selectedSubject.set(subjectNames[0])
+    print(subjectNames)
+
+    preference_list.append(p4.get())
+    print("user pref:", preference_list)
+
+    # elif len(subjectNames) == 5:
+    Subject(str(newSubject5.get()))
+    subjectNames = []
+    print("new Subject:", newSubject5.get())
+    print("sn:", subjectNames)
+    subjectMenu.children["menu"].delete(0, "end")
+    for s in subjectList:
+        subjectNames.append(s.name)
+        subjectMenu.children["menu"].add_command(label=s.name,
+                                                              command=lambda sub=s.name: selectedSubject.set(sub))
+    selectedSubject.set(subjectNames[0])
+    print("subject names:", subjectNames)
+
+    preference_list.append(p5.get())
+    print("user pref:", preference_list)
+
+    # elif len(subjectNames) == 6:
+    Subject(str(newSubject6.get()))
+    subjectNames = []
+    print("new Subject:", newSubject6.get())
+    print("sn:", subjectNames)
+    subjectMenu.children["menu"].delete(0, "end")
+    for s in subjectList:
+        subjectNames.append(s.name)
+        subjectMenu.children["menu"].add_command(label=s.name,
+                                                              command=lambda sub=s.name: selectedSubject.set(sub))
+    selectedSubject.set(subjectNames[0])
+    print("subject names:", subjectNames)
+
+    preference_list.append(p6.get())
+    print("user pref:", preference_list)
+
+    add_preference(preference_list)
+
+def add_preference(pref_list_strings):
+    global preference_points_list
+
+    preference_points_list = [0] # for TOK
+    print(preference_points_list)
+    print(pref_list_strings)
+    print(pref_list_strings[1] == "indifferent")
+    global pref_points
+    pref_points = 1
+    for i in range(0, 6):
+        pref_in_string = pref_list_strings[i+1]
+        if pref_in_string == "dislike":
+            pref_points = 0
+            preference_points_list.append(0)
+        elif pref_in_string == "indifferent":
+            preference_points_list.append(1)
+        elif pref_in_string == "like":
+            pref_points = 2
+            preference_points_list.append(2)
+
+    print("the pref points list:", preference_points_list)
+
+    return preference_points_list
+
+Subject("TOK")
+
+# hopefully the last thing at the moment - week overview creation!
+###
+taskList = []
+tasksAll = []
+
+class Task:
+    # when new task object is added, set the name and add this task to tasksAll
+    def __init__(self, name):
+        self.name = name
+        taskList.append(self)
+        tasksAll.append(name)
+        print("tasksAll:", tasksAll)
+
+def create_week():
+    global week_overview
+    week_overview = [["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "empty", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0],
+                     ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0],
+                     ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0],
+                     ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0]]
+
+    #  [["subject", "description", "days until due", "length", "total score"]]
+    # remember that functions such as ".append" work here !!!
+
+    tasks_unordered = task_list
+    number_of_tasks = len(tasks_unordered)
+
+    for i in range(0, number_of_tasks):
+        # might not need the next two lines..
+        week_overview_element = week_overview[i]
+        tasks_unordered_element = tasks_unordered[i]
+        week_overview.pop(19)
+        week_overview.insert(0, tasks_unordered[i])
+
+    print(week_overview)
+
+    def takeSecond(elem):
+        return elem[4]
+    week_overview.sort(key=takeSecond, reverse=True)
+    print("ORganised week overview?", week_overview)
+
+    return week_overview
+
+def addTask():
+    Task(newTask.get())
+    # LAST THING: retrieve the subject name!!!
+    task_subject_to_display = selectedSubject.get()
+    final_week = create_week()
+    listbox.delete(0, END)
+    for j in range (0, len(final_week)):
+        listbox.insert(END, [str(final_week[j][0]), "---", final_week[j][4]])
+    selectedTask.set(tasksAll[0])
+    print("in addTask:", tasksAll)
+
+Task("Subject")
+
+
+# ---
+
+class SeaofBTCapp(tk.Tk):
+    # this is the main class for the program
+
+    def get_page(self, page_class):
+        return self.frames[page_class]
+
+    def __init__(self, *args, **kwargs):  # protection
+        tk.Tk.__init__(self, *args, **kwargs)  # can only be called by itself
+        container = tk.Frame(self)
+
+        container.pack(side="top", fill="both", expand=True)
+        # layout for the main window
+
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+        # window configuration
+
+        self.frames = {}
+
+        for F in (StartPage, PageOneProfile, PageTwoTasks, PageThreeWeek):
+            frame = F(container, self)
+            frame.pack(fill=X, padx=100)
+            # for all pages, layout stays the same
+
+            self.frames[F] = frame
+
+            frame.grid(row=0, column=0, sticky="nsew")
+            # frame visual configuration
+
+        self.show_frame(StartPage)
+        # StartPage opens straight away
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
+class StartPage(tk.Frame):
+    # This is the StartPage class
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Start Page"
+                                    "\nHello, welcome to your main menu. Please select an option.", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        button3 = tk.Button(self, text="View WEEK",
+                            command=lambda: controller.show_frame(PageThreeWeek))
+        button3.pack(fill=X, side=BOTTOM)
+        button2 = tk.Button(self, text="View/edit TASKS",
+                            command=lambda: controller.show_frame(PageTwoTasks))
+        button2.pack(fill=X, side=BOTTOM)
+        button1 = tk.Button(self, text="View/edit PROFILE",
+                            command=lambda: controller.show_frame(PageOneProfile))
+        button1.pack(fill=X, side=BOTTOM)
+
+
+class PageOneProfile(tk.Frame):
+    user_pref = ["dislike", "indifferent", "like"]
+
+    def build_hl_one(self):
+        label3 = tk.Label(self, text="Enter HL 1:", font=LARGE_FONT)
+        label3.grid(row=2, column=0)
+
+        # entry field for new subject
+        global newSubject
+        newSubject = StringVar(self)
+        print("new subject:", newSubject)
+        newEntry1 = Entry(self, textvariable=newSubject)
+        newEntry1.grid(row=2, column=1)
+        print("new entry:", str(newSubject))
+
+        global p1
+        p1 = StringVar(self)
+        p1.set("indifferent") # default value
+        user_pref = self.user_pref
+        w1 = OptionMenu(self, p1, user_pref[0], user_pref[1], user_pref[2])
+        w1.grid(row=2, column=2)
+
+        return p1
+
+    def build_hl_two(self):
+        label4 = tk.Label(self, text="Enter HL 2:", font=LARGE_FONT)
+        label4.grid(row=3, column=0)
+
+        # entry field for new subject
+        global newSubject2
+        newSubject2 = StringVar(self)
+        print("new subject:", newSubject2)
+        newEntry2 = Entry(self, textvariable=newSubject2)
+        newEntry2.grid(row=3, column=1)
+        print("new entry:", str(newSubject2))
+
+        global p2
+        p2 = StringVar(self)
+        p2.set("indifferent") # default value
+        user_pref = self.user_pref
+        w2 = OptionMenu(self, p2, user_pref[0], user_pref[1], user_pref[2])
+        w2.grid(row=3, column=2)
+
+        return newSubject2
+
+    def build_hl_three(self):
+        label4 = tk.Label(self, text="Enter HL 3:", font=LARGE_FONT)
+        label4.grid(row=4, column=0)
+
+        # entry field for new subject
+        global newSubject3
+        newSubject3 = StringVar(self)
+        print("new subject:", newSubject3)
+        newEntry2 = Entry(self, textvariable=newSubject3)
+        newEntry2.grid(row=4, column=1)
+        print("new entry:", str(newSubject3))
+
+        global p3
+        p3 = StringVar(self)
+        p3.set("indifferent") # default value
+        user_pref = self.user_pref
+        w2 = OptionMenu(self, p3, user_pref[0], user_pref[1], user_pref[2])
+        w2.grid(row=4, column=2)
+
+        return newSubject3
+
+    def build_sl_one(self):
+        label3 = tk.Label(self, text="Enter SL 1:", font=LARGE_FONT)
+        label3.grid(row=5, column=0)
+
+        # entry field for new subject
+        global newSubject4
+        newSubject4 = StringVar(self)
+        print("new subject:", newSubject4)
+        newEntry1 = Entry(self, textvariable=newSubject4)
+        newEntry1.grid(row=5, column=1)
+        print("new entry:", str(newSubject4))
+
+        global p4
+        p4 = StringVar(self)
+        p4.set("indifferent") # default value
+        user_pref = self.user_pref
+        w1 = OptionMenu(self, p4, user_pref[0], user_pref[1], user_pref[2])
+        w1.grid(row=5, column=2)
+
+        return newSubject4
+
+    def build_sl_two(self):
+        label4 = tk.Label(self, text="Enter SL 2:", font=LARGE_FONT)
+        label4.grid(row=6, column=0)
+
+        # entry field for new subject
+        global newSubject5
+        newSubject5 = StringVar(self)
+        print("new subject:", newSubject5)
+        newEntry2 = Entry(self, textvariable=newSubject5)
+        newEntry2.grid(row=6, column=1)
+        print("new entry:", str(newSubject5))
+
+        global p5
+        p5 = StringVar(self)
+        p5.set("indifferent") # default value
+        user_pref = self.user_pref
+        w2 = OptionMenu(self, p5, user_pref[0], user_pref[1], user_pref[2])
+        w2.grid(row=6, column=2)
+
+        return newSubject5
+
+    def build_sl_three(self):
+        label4 = tk.Label(self, text="Enter SL 3:", font=LARGE_FONT)
+        label4.grid(row=7, column=0)
+
+        # entry field for new subject
+        global newSubject6
+        newSubject6 = StringVar(self)
+        print("new subject:", newSubject6)
+        newEntry2 = Entry(self, textvariable=newSubject6)
+        newEntry2.grid(row=7, column=1)
+        print("new entry:", str(newSubject6))
+
+        global p6
+        p6 = StringVar(self)
+        p6.set("indifferent") # default value
+        user_pref = self.user_pref
+        w2 = OptionMenu(self, p6, user_pref[0], user_pref[1], user_pref[2])
+        w2.grid(row=7, column=2)
+
+        return newSubject6
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label1 = tk.Label(self, text="---PROFILE---", font=LARGE_FONT)
+        label1.grid(row=0, column=1)
+        label2 = tk.Label(self, text="Enter all of your subjects and how much you like/dislike them:\n"
+                                     "It is strongly suggested that you use all options "
+                                     "(\"like\", \"indifferent\", \"dislike\")\n", font=LARGE_FONT)
+        label2.grid(row=1, column=1)
+
+        self.build_hl_one()
+        self.build_hl_two()
+        self.build_hl_three()
+        self.build_sl_one()
+        self.build_sl_two()
+        self.build_sl_three()
+
+
+        user_pref = self.user_pref
+
+        label9 = tk.Label(self, text="ToK will be automatically added.", font=LARGE_FONT)
+        label9.grid(row=8, column=1)
+
+
+        # this button saves profile
+        button_add_profile = Button(self, text="SAVE PROFILE", command=addSubject)
+        button_add_profile.grid(row=9, column=1)
+
+        button1 = tk.Button(self, text="Back to HOME",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.grid(row=10, column=1)
+
+        button2 = tk.Button(self, text="View/edit TASKS",
+                            command=lambda: controller.show_frame(PageTwoTasks))
+        button2.grid(row=11, column=1)
+
+        button3 = tk.Button(self, text="View WEEK",
+                            command=lambda: controller.show_frame(PageThreeWeek))
+        button3.grid(row=12, column=1)
+
+
+class PageTwoTasks(tk.Frame):
+    global task_list
+    task_list = [["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0],
+                 ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0],
+                 ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0],
+                 ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0], ["empty", "", 0, 0, 0]]
+
+    # this function actually stores the task to be used for week overview.
+    def create_task(self, subject, description, deadline, duration):
+        # save task to task list.
+        #  [["subject", "description", "days until due", "length", "total score"]]
+        # I have all variables except "total score"
+        # get subject level and user preference:
+        ## this will have to be obtained from profile at some point.
+        element_in_pref_list = 0
+        if subject == subjectNames[0]:
+            s_level_points = 0
+            element_in_pref_list = 0
+        elif subject == subjectNames[1] or subject == subjectNames[2] or subject == subjectNames[3]:
+            s_level_points = 2
+            if subject == subjectNames[1]:
+                element_in_pref_list = 1
+            elif subject == subjectNames[2]:
+                element_in_pref_list = 2
+            elif subject == subjectNames[3]:
+                element_in_pref_list = 2
+        elif subject == subjectNames[4] or subject == subjectNames[5] or subject == subjectNames[6]:
+            s_level_points = 1
+            if subject == subjectNames[4]:
+                element_in_pref_list = 4
+            elif subject == subjectNames[5]:
+                element_in_pref_list = 5
+            elif subject == subjectNames[6]:
+                element_in_pref_list = 6
+        # - create a conditional to calc this
+        s_pref_points = preference_points_list[element_in_pref_list]
+        # - obtain from PageOne?
+        # calculate points based on days until due:
+        deadline = int(deadline)
+        deadline_points = 0
+        if deadline == 1:
+            deadline_points = 2
+        elif deadline <= 3 and deadline > 1:
+            deadline_points = 1
+        elif deadline > 3:
+            deadline_points = 0.5
+        # create int out of str duration.
+        hours = int(duration[0])
+        minutes = int(duration[2:])
+        duration_dec = (hours + (minutes / 60))
+        # calculate points based on task duration:
+        t_duration_points = 0
+        if duration_dec >= 3:
+            t_duration_points = 2
+        elif duration_dec >= 1 and duration_dec < 3:
+            t_duration_points = 1
+        elif duration_dec < 1:
+            t_duration_points = 0
+        score = 3 * deadline_points + 3 * t_duration_points + s_pref_points + 2 * s_level_points
+        task_list.pop(19)
+        task_list.insert(0, [subject, description, deadline, duration, score])
+        print(task_list)
+
+    def create_subject_dropdown_for_tasks(self):
+        label3 = tk.Label(self, text="Choose subject:", font=LARGE_FONT)
+        label3.pack(pady=10, padx=10, anchor=W)
+        # creating a dropdown option for the subject of the new task
+        # subject menu
+        # set up selected subject variable
+        global selectedSubject
+        selectedSubject = StringVar(self)
+        selectedSubject.set(subjectNames[0]) # default value
+        print("selected subject:", str(selectedSubject))
+        print("subjectNames:", subjectNames)
+        print("LIST:", str(selectedSubject))
+        global subjectMenu
+        subjectMenu = OptionMenu(self, selectedSubject, *subjectNames)
+        # again, rename the variables sometime.
+        subjectMenu.pack(fill=X)
+
+        return selectedSubject
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        self.controller=controller
+
+        label1 = tk.Label(self, text="---TASKS---", font=LARGE_FONT)
+        label1.pack(pady=10, padx=10)
+        label2 = tk.Label(self, text="Complete these steps to add task:\n", font=LARGE_FONT)
+        label2.pack(pady=10, padx=10)
+
+        # moved to a function.
+        self.create_subject_dropdown_for_tasks()
+
+        label4 = tk.Label(self, text="Enter task description:", font=LARGE_FONT)
+        label4.pack(pady=10, padx=10, anchor=W)
+        # creating a text entry box for the new task
+        global newTask
+        newTask = StringVar()
+        e = Entry(self, textvariable=newTask)
+        e.pack(fill=X)
+        e.delete(0, END)
+        e.insert(0, "...")
+
+        label5 = tk.Label(self, text="Choose how many days are left until due:", font=LARGE_FONT)
+        label5.pack(pady=10, padx=10, anchor=W)
+        # choose days until due
+        v = StringVar(self)
+        v.set(1)  # default value
+        l = [1, 2, 3, 4, 5, 6, 7]
+        w = OptionMenu(self, v, str(l[0]), str(l[1]), str(l[2]), str(l[3]), str(l[4]), str(l[5]), str(l[6]))
+        w.pack(fill=X)
+
+        label6 = tk.Label(self, text="Choose the approximate duration of this task:", font=LARGE_FONT)
+        label6.pack(pady=10, padx=10, anchor=W)
+        # choose task duration
+        vd = StringVar(self)
+        vd.set("0:10")  # default value
+        time_list = ["0:10", "0:20", "0:30", "0:40", "0:50", "1:00", "1:10", "1:20", "1:30", "1:40", "1:50", "2:00",
+                     "2:10", "2:20", "2:30", "2:40", "2:50", "3:00", "3:10", "3:20", "3:30", "3:40", "3:50", "4:00"]
+        w = OptionMenu(self, vd, time_list[0], time_list[1], time_list[2], time_list[3], time_list[4], time_list[5],
+                       time_list[6], time_list[7], time_list[8], time_list[9], time_list[10], time_list[11],
+                       time_list[12], time_list[13], time_list[14], time_list[15], time_list[16], time_list[17],
+                       time_list[18], time_list[19], time_list[20], time_list[21], time_list[22], time_list[23])
+        w.pack(fill=X)
+
+        # this function obtains the information from the user to be used in create_task().
+        # needs to be here to retrieve data but can't actually create the task because function within window function.
+        # therefore only retireves variables and 'shares' them with function create_task() that is a function of the class.
+        # then I can easily use these in creating the week overview. "Easily".
+        def confirm_new_task():
+            if task_list[-1][4] != 0:
+                button_add_task.config(state=DISABLED)
+                print("button disabled because limit reached")
+                label6 = tk.Label(self,
+                                  text="Limit of 20 tasks reached. Please delete some tasks before adding new ones.",
+                                  font=LARGE_FONT)
+                label6.pack(pady=10, padx=10, anchor=W)
+            ## make sure that a task cannot be created if it has the default vaules in.
+            print("Task created:")
+            task_subject = selectedSubject.get() # could rename these variables sometime, I guess.
+            task_description = e.get()
+            task_deadline = v.get()
+            task_duration = vd.get()
+            print("subject:", task_subject)
+            print("description:", task_description)
+            print("days until due:", task_deadline)
+            print("duration:", task_duration)
+            PageTwoTasks.create_task(self, task_subject, task_description, task_deadline, task_duration)
+
+        # this button adds a new task
+        button_add_task = Button(self, text="ADD TASK", command=confirm_new_task)
+        button_add_task.pack()
+
+        # probably create a label here which says something like:
+        # last created task:
+        # task details here...
+
+        button1 = tk.Button(self, text="Back to HOME",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack(fill=X, side=BOTTOM)
+
+        button2 = tk.Button(self, text="View PROFILE",
+                            command=lambda: controller.show_frame(PageOneProfile))
+        button2.pack(fill=X, side=BOTTOM)
+
+        button3 = tk.Button(self, text="View WEEK",
+                            command=lambda: controller.show_frame(PageThreeWeek))
+        button3.pack(fill=X, side=BOTTOM)
+
+    # these functions are part of the class, but not part of the window.
+    # probably move back up.
+
+
+
+class PageThreeWeek(tk.Frame):
+
+    def __init__(self, parent, controller):
+        #  week_overview = tk.listVar()
+
+        tk.Frame.__init__(self, parent)
+        label1 = tk.Label(self, text="--- WEEK OVERVIEW ---", font=LARGE_FONT)
+        label1.pack(pady=10, padx=10)
+        label2 = tk.Label(self, text="This is your week:", font=LARGE_FONT)
+        label2.pack(pady=10, padx=10)
+        label3 = tk.Label(self, text="TASKS IN ORDER GO HERE!!!", font=LARGE_FONT)
+        label3.pack(pady=10, padx=10)
+        label4 = tk.Label(self, text="Week overview can be found below.\n"
+                                     "(scroll to reach the end)", font=LARGE_FONT)
+        label4.pack(pady=10, padx=10)
+
+        # refresh week:
+        button = tk.Button(self, text="REFRESH WEEK!",
+                            command=addTask)
+        button.pack()
+
+        # This list box gives the week overview.
+        # still need to find out how to make the default
+        global selectedTask
+        selectedTask = StringVar()
+        selectedTask.set(tasksAll[0])
+
+        global listbox
+        listbox = Listbox(self)
+        listbox.pack(fill=BOTH, expand=1)
+        listbox.insert(END, "WEEK OVERVIEW PLACEHOLDER!!!")
+        '''
+        for item in PageTwoTasks.create_week(self):
+            listbox.insert(END, item)
+        '''
+
+        # these are the menu buttons
+        button1 = tk.Button(self, text="Back to HOME",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack(fill=X, side=BOTTOM)
+
+        button2 = tk.Button(self, text="View PROFILE",
+                            command=lambda: controller.show_frame(PageOneProfile))
+        button2.pack(fill=X, side=BOTTOM)
+
+        button3 = tk.Button(self, text="View/edit TASKS",
+                            command=lambda: controller.show_frame(PageTwoTasks))
+        button3.pack(fill=X, side=BOTTOM)
+
+
+app = SeaofBTCapp()
+app.title("IB Organisation App")
+app.mainloop()
